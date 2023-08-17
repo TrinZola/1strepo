@@ -16,4 +16,3 @@ sudo a2ensite 192.168.60.10.conf
 
 # Disable the default virtual host
 sudo a2dissite 000-default.conf#!/bin/bash
-#add fix to exercise3 here
