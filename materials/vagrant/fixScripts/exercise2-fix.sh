@@ -1,3 +1,5 @@
+#!/bin/bash
+
 HOSTS_FILE="/etc/hosts"
 ENTRY_TO_REMOVE="127.0.0.1 www.ascii-art.de"
 
