@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Configure Apache to bind to the specified IP address
 sudo sed -i 's/Listen 80/Listen 192.168.60.10:80/' /etc/apache2/ports.conf
 
