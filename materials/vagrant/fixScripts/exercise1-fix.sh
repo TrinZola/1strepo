@@ -26,5 +26,3 @@ sudo iptables -F
 sudo systemctl restart systemd-resolved
 
 echo "DNS address $dns_address added to resolved.conf. systemd-resolved service restarted."
-
-sudo reboot
