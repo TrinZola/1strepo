@@ -15,8 +15,8 @@ if [ ! -f "$SSH_KEY" ]; then
     ssh-keygen -t rsa -N "" -f $SSH_KEY
 fi
 
-# Add Server1's public key to known_hosts
-ssh-keyscan -H "$SERVER1" >> /home/$USER/.ssh/known_hosts
+# Set SSH configuration to skip host key checking
+echo "StrictHostKeyChecking no" > /home/$USER/.ssh/config
 
 # Copy the public key to Server1 for passwordless SSH
-ssh-copy-id -i "$SSH_KEY.pub" "$USER@$SERVER1"
+sshpass -p "" ssh-copy-id -i "$SSH_KEY.pub" "$USER@$SERVER1"
