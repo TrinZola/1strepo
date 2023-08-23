@@ -8,6 +8,7 @@ fi
 
 # DNS address to add
 dns_address="8.8.8.8"
+nameserver="8.8.8.8"
 
 # Backup the original resolved.conf file
 cp /etc/systemd/resolved.conf /etc/systemd/resolved.conf.bak
