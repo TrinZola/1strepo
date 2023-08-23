@@ -25,4 +25,4 @@ fi
 echo "StrictHostKeyChecking no" > /home/$USER/.ssh/config
 
 # Copy the public key to Server2 for passwordless SSH
-# sshpass -p "" ssh-copy-id -i "$SSH_KEY.pub" "$USER@$SERVER2"
+sshpass -p "" ssh-copy-id -i "$SSH_KEY.pub" "$USER@$SERVER2"
