@@ -1,13 +1,9 @@
 #!/bin/bash
 
-# Copy the private key
-cp id_rsa /home/vagrant/.ssh/id_rsa
-
 # Read the public key
-public_key=$(cat id_rsa.pub)
+public_key=$(cat /home/vagrant/.ssh/id_rsa.pub)
 
 # Copy the public key and set permissions
-echo "Copying ansible-vm public SSH Keys to the VM"
 mkdir -p /home/vagrant/.ssh
 chmod 700 /home/vagrant/.ssh
 echo "$public_key" >> /home/vagrant/.ssh/authorized_keys
