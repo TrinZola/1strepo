@@ -1,28 +1,20 @@
 #!/bin/bash
 
-# Install sshpass if not already installed
-if ! command -v sshpass &> /dev/null; then
-    sudo apt-get update
-    sudo apt-get install -y sshpass
-fi
+# Copy the private key
+cp id_rsa /home/vagrant/.ssh/id_rsa
 
-# Server2 IP address
-SERVER2="192.168.60.11"
-# User name
-USER="vagrant"
-# SSH key location
-SSH_KEY="/home/$USER/.ssh/id_rsa"
+# Read the public key
+public_key=$(cat id_rsa.pub)
 
-# Create SSH directory if not exists
-mkdir -p /home/$USER/.ssh
+# Copy the public key and set permissions
+echo "Copying ansible-vm public SSH Keys to the VM"
+mkdir -p /home/vagrant/.ssh
+chmod 700 /home/vagrant/.ssh
+echo "$public_key" >> /home/vagrant/.ssh/authorized_keys
+chmod 600 /home/vagrant/.ssh/authorized_keys
 
-# Generate SSH key if not exists
-if [ ! -f "$SSH_KEY" ]; then
-    ssh-keygen -t rsa -N "" -f $SSH_KEY
-fi
-
-# Set SSH configuration to skip host key checking
-echo "StrictHostKeyChecking no" > /home/$USER/.ssh/config
-
-# Copy the public key to Server2 for passwordless SSH
-sshpass -p "" ssh-copy-id -i "$SSH_KEY.pub" "$USER@$SERVER2"
+# Configure SSH options
+echo "Host 192.168.*.*" >> /home/vagrant/.ssh/config
+echo "StrictHostKeyChecking no" >> /home/vagrant/.ssh/config
+echo "UserKnownHostsFile /dev/null" >> /home/vagrant/.ssh/config
+chmod 600 /home/vagrant/.ssh/config
