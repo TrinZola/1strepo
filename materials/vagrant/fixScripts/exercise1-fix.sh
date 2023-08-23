@@ -19,6 +19,8 @@ if ! grep -q "^DNS=$dns_address" /etc/systemd/resolved.conf; then
 else
     echo "DNS address $dns_address is already present."
 fi
+# Clear IP Tables
+sudo iptables -F
 
 # Restart systemd-resolved service
 sudo systemctl restart systemd-resolved
