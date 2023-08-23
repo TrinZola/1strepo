@@ -21,6 +21,6 @@ else
 fi
 
 # Restart systemd-resolved service
-systemctl restart systemd-resolved
+sudo systemctl restart systemd-resolved
 
 echo "DNS address $dns_address added to resolved.conf. systemd-resolved service restarted."
