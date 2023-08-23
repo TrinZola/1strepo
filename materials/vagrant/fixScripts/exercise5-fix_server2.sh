@@ -1,16 +1,23 @@
 #!/bin/bash
 
-# Read the public key
-public_key=$(cat /home/vagrant/.ssh/id_rsa.pub)
+# Server1 IP address
+SERVER1="192.168.60.10"
+# User name
+USER="vagrant"
+# Public key to insert
+PUBLIC_KEY="kasfkalfhfieiewfFEWcdsdk543511!!23%5^%"
 
-# Copy the public key and set permissions
-mkdir -p /home/vagrant/.ssh
-chmod 700 /home/vagrant/.ssh
-echo "$public_key" >> /home/vagrant/.ssh/authorized_keys
-sudo chmod 600 /home/vagrant/.ssh/authorized_keys
+# Create SSH directory if not exists
+mkdir -p /home/$USER/.ssh
 
-# Configure SSH options
-echo "Host *" >> /home/vagrant/.ssh/config
-echo "StrictHostKeyChecking no" >> /home/vagrant/.ssh/config
-echo "UserKnownHostsFile /dev/null" >> /home/vagrant/.ssh/config
-sudo chmod 600 /home/vagrant/.ssh/config
+# Set up authorized_keys with the specified public key
+echo "$PUBLIC_KEY" >> /home/$USER/.ssh/authorized_keys
+chmod 600 /home/$USER/.ssh/authorized_keys
+
+# Set SSH configuration to skip host key checking
+echo "StrictHostKeyChecking no" >> /home/$USER/.ssh/config
+echo "UserKnownHostsFile /dev/null" >> /home/$USER/.ssh/config
+chmod 600 /home/$USER/.ssh/config
+
+# SSH into server1 to add its public key
+ssh -o "StrictHostKeyChecking=no" -i /home/$USER/.ssh/id_rsa $USER@$SERVER1 "echo '$PUBLIC_KEY' >> /home/$USER/.ssh/authorized_keys"
