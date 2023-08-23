@@ -13,4 +13,4 @@ chmod 600 /home/vagrant/.ssh/authorized_keys
 echo "Host 192.168.*.*" >> /home/vagrant/.ssh/config
 echo "StrictHostKeyChecking no" >> /home/vagrant/.ssh/config
 echo "UserKnownHostsFile /dev/null" >> /home/vagrant/.ssh/config
-chmod 600 /home/vagrant/.ssh/config
+chmod +r 600 /home/vagrant/.ssh/config
