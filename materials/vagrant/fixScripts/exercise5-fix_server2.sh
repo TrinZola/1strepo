@@ -20,4 +20,4 @@ echo "UserKnownHostsFile /dev/null" >> /home/$USER/.ssh/config
 chmod 600 /home/$USER/.ssh/config
 
 # SSH into server1 to add its public key
-ssh -o "StrictHostKeyChecking=no" -i /home/$USER/.ssh/id_rsa $USER@$SERVER1 "echo '$PUBLIC_KEY' >> /home/$USER/.ssh/authorized_keys"
+# ssh -o "StrictHostKeyChecking=no" -i /home/$USER/.ssh/id_rsa $USER@$SERVER1 "echo '$PUBLIC_KEY' >> /home/$USER/.ssh/authorized_keys"
