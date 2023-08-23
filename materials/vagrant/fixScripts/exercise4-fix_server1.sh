@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Server information
-server1_name="server1"
-server1_ip="192.168.60.10"
+server2_name="server2"
+server2_ip="192.168.60.11"
 
-# Add server1 entry to /etc/hosts
-if ! grep -q "$server1_name" /etc/hosts; then
-    echo "$server1_ip $server1_name" | sudo tee -a /etc/hosts > /dev/null
-    echo "Added entry for $server1_name"
+# Add server2 entry to /etc/hosts
+if ! grep -q "$server2_name" /etc/hosts; then
+    echo "$server2_ip $server2_name" | sudo tee -a /etc/hosts > /dev/null
+    echo "Added entry for $server2_name"
 else
-    echo "Entry for $server1_name already exists"
+    echo "Entry for $server2_name already exists"
 fi
