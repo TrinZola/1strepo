@@ -9,7 +9,7 @@ if [ ! -f ~/.ssh/id_rsa.pub ]; then
 fi
 
 # Copy the public key to server2
-echo "Copying SSH public key to server2 (192.168.60.11)..."
-ssh-copy-id -i ~/.ssh/id_rsa.pub 192.168.60.11
+echo "Copying SSH public key to server2 (192.168.60.10)..."
+ssh-copy-id -i ~/.ssh/id_rsa.pub 192.168.60.10
 
 echo "Passwordless SSH setup for server2 complete!"
