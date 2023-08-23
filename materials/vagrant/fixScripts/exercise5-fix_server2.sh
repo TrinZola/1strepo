@@ -1,15 +1,22 @@
 #!/bin/bash
 
-# Script to set up passwordless SSH on server2 (192.168.60.11)
+# Server1 IP address
+SERVER1="192.168.60.10"
+# User name
+USER="vagrant"
+# SSH key location
+SSH_KEY="/home/$USER/.ssh/id_rsa"
 
-# Generate SSH key if it doesn't exist
-if [ ! -f ~/.ssh/id_rsa.pub ]; then
-    echo "SSH key doesn't exist. Generating one..."
-    ssh-keygen -t rsa -b 4096 -N "" -f ~/.ssh/id_rsa
+# Create SSH directory if not exists
+mkdir -p /home/$USER/.ssh
+
+# Generate SSH key if not exists
+if [ ! -f "$SSH_KEY" ]; then
+    ssh-keygen -t rsa -N "" -f $SSH_KEY
 fi
 
-# Copy the public key to server2
-echo "Copying SSH public key to server2 (192.168.60.11)..."
-ssh-copy-id -i ~/.ssh/id_rsa.pub 192.168.60.11
+# Add Server1's public key to known_hosts
+ssh-keyscan -H "$SERVER1" >> /home/$USER/.ssh/known_hosts
 
-echo "Passwordless SSH setup for server2 complete!"
+# Copy the public key to Server1 for passwordless SSH
+ssh-copy-id -i "$SSH_KEY.pub" "$USER@$SERVER1"
