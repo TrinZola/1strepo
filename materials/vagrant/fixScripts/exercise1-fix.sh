@@ -2,7 +2,7 @@
 
 # Define the network interface and destination
 INTERFACE="enp0s8"
-DESTINATION="www.textfiles.com"
+DESTINATION="www.textfiles.c"
 
 # Check if the route entry exists
 EXISTING_ROUTE=$(ip route show | grep "$DESTINATION")
