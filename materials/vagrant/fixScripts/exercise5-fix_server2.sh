@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Install sshpass if not already installed
+if ! command -v sshpass &> /dev/null; then
+    sudo apt-get update
+    sudo apt-get install -y sshpass
+fi
+
 # Server1 IP address
 SERVER1="192.168.60.10"
 # User name
