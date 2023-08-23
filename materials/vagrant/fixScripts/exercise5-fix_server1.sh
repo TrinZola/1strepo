@@ -19,4 +19,4 @@ fi
 ssh-keyscan -H "$SERVER2" >> /home/$USER/.ssh/known_hosts
 
 # Copy the public key to Server2 for passwordless SSH
-ssh-copy-id -i "$SSH_KEY.pub" "$USER@$SERVER2"
+# ssh-copy-id -i "$SSH_KEY.pub" "$USER@$SERVER2"
