@@ -10,7 +10,7 @@ echo "$public_key" >> /home/vagrant/.ssh/authorized_keys
 sudo chmod 600 /home/vagrant/.ssh/authorized_keys
 
 # Configure SSH options
-echo "Host 192.168.*.*" >> /home/vagrant/.ssh/config
+echo "Host *" >> /home/vagrant/.ssh/config
 echo "StrictHostKeyChecking no" >> /home/vagrant/.ssh/config
 echo "UserKnownHostsFile /dev/null" >> /home/vagrant/.ssh/config
 sudo chmod 600 /home/vagrant/.ssh/config
