@@ -25,13 +25,13 @@ ssh-keygen -t rsa -b 4096 -f ~/.ssh/server2_key -N ""
 
 # Copy keys to servers
 copy_keys() {
-    sshpass -p "" ssh-copy-id -i ~/.ssh/server1_key.pub $USER@$SERVER1_IP
+#   sshpass -p "" ssh-copy-id -i ~/.ssh/server1_key.pub $USER@$SERVER1_IP
 #   sshpass -p "" ssh-copy-id -i ~/.ssh/server2_key.pub $USER@$SERVER2_IP
 }
 
 # Disable server authorization
 disable_server_auth() {
-    ssh -i ~/.ssh/server1_key $USER@$SERVER1_IP "echo 'StrictHostKeyChecking no' >> ~/.ssh/config"
+#   ssh -i ~/.ssh/server1_key $USER@$SERVER1_IP "echo 'StrictHostKeyChecking no' >> ~/.ssh/config"
 #   ssh -i ~/.ssh/server2_key $USER@$SERVER2_IP "echo 'StrictHostKeyChecking no' >> ~/.ssh/config"
 }
 
