@@ -18,11 +18,11 @@ ssh-keygen -t ecdsa -f ~/.ssh/id_ecdsa -N ""
 
 # Add the private key to the SSH agent
 echo "Adding private key to SSH agent..."
-ssh-add ~/.ssh/id_ecdsa
+sudo ssh-add ~/.ssh/id_ecdsa
 
 # Copy the public key to server1 for authentication
 echo "Copying public key to server1 for authentication..."
-ssh-copy-id -i ~/.ssh/id_ecdsa.pub "vagrant@${SERVER1_IP}"
+sudo ssh-copy-id -i ~/.ssh/id_ecdsa.pub "vagrant@${SERVER1_IP}"
 
 # Debug: Display the public key for troubleshooting
 echo "Contents of public key:"
