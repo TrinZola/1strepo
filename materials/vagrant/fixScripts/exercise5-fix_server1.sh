@@ -19,7 +19,7 @@ echo "UserKnownHostsFile /dev/null" >> /home/$USERNAME/.ssh/config
 chmod 600 /home/$USERNAME/.ssh/config
 
 # Copy public key to remote server
-ssh-copy-id -i ~/.ssh/id_rsa.pub "$USERNAME@$SERVER"
+ssh-copy-id -i $HOME/.ssh/id_rsa.pub "$USERNAME@$SERVER"
 
 # Function to edit sshd_config and restart sshd
 edit_sshd_config() {
