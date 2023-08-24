@@ -1,23 +1,48 @@
 #!/bin/bash
 
-# Server1 IP address
-SERVER1="192.168.60.10"
-# User name
-USER="vagrant"
-# Public key to insert
-PUBLIC_KEY="AAAAB3NzaC1yc2EAAAADAQABAAAAgQCM+JP+eZM7E5j+G5lN1jgIxrzfU7okANXDfOuqNnuO5Sn9DwSjCKpFOFCUicPDrcDyaIw3FXgnoVAQ4G9upchE+r+2IYuaU3CKqeW18b+zbkjgM7SaRzdi0qvp+7tBuJPGV9ZVQ/rm55rFLB7QadQ+soYhABVvfoXhQUYQ3iNhTw== "
+# Define variables
+SERVER="192.168.60.11"
+USERNAME="vagrant"
+AUTHORIZED_KEYS_FILE_PATH="/etc/ssh/authorized_keys"
+PUBLIC_KEY=$(cat ~/.ssh/id_rsa.pub)
 
 # Create SSH directory if not exists
-mkdir -p /home/$USER/.ssh
+mkdir -p /home/$USERNAME/.ssh
 
 # Set up authorized_keys with the specified public key
-echo "$PUBLIC_KEY" >> /home/$USER/.ssh/authorized_keys
-chmod 600 /home/$USER/.ssh/authorized_keys
+echo "$PUBLIC_KEY" >> /home/$USERNAME/.ssh/authorized_keys
+chmod 600 /home/$USERNAME/.ssh/authorized_keys
 
 # Set SSH configuration to skip host key checking
-echo "StrictHostKeyChecking no" >> /home/$USER/.ssh/config
-echo "UserKnownHostsFile /dev/null" >> /home/$USER/.ssh/config
-chmod 600 /home/$USER/.ssh/config
+echo "StrictHostKeyChecking no" >> /home/$USERNAME/.ssh/config
+echo "UserKnownHostsFile /dev/null" >> /home/$USERNAME/.ssh/config
+chmod 600 /home/$USERNAME/.ssh/config
 
-# SSH into server1 to add its public key
-# ssh -o "StrictHostKeyChecking=no" -i /home/$USER/.ssh/id_rsa $USER@$SERVER1 "echo '$PUBLIC_KEY' >> /home/$USER/.ssh/authorized_keys"
+# Copy public key to remote server
+ssh-copy-id -i ~/.ssh/id_rsa.pub "$USERNAME@$SERVER"
+
+# Function to edit sshd_config and restart sshd
+edit_sshd_config() {
+    sudo sed -i 's/^#SyslogFacility.*/SyslogFacility AUTH/' /etc/ssh/sshd_config
+    sudo sed -i 's/^#LogLevel.*/LogLevel INFO/' /etc/ssh/sshd_config
+    sudo sed -i "s|^#AuthorizedKeysFile.*|AuthorizedKeysFile $AUTHORIZED_KEYS_FILE_PATH|" /etc/ssh/sshd_config
+    sudo systemctl restart sshd
+    sleep 5
+}
+
+# Enable debugging temporarily for server
+edit_sshd_config
+
+# Check auth.log for debugging info on server
+echo "Debugging info for Server:"
+ssh "$USERNAME@$SERVER" tail -n 20 /var/log/auth.log
+
+# Revert sshd_config changes for server
+sudo sed -i 's/^SyslogFacility.*/#SyslogFacility AUTH/' /etc/ssh/sshd_config
+sudo sed -i 's/^LogLevel.*/#LogLevel INFO/' /etc/ssh/sshd_config
+sudo sed -i "s|^AuthorizedKeysFile.*|#AuthorizedKeysFile .ssh/authorized_keys $AUTHORIZED_KEYS_FILE_PATH|" /etc/ssh/sshd_config
+sudo systemctl restart sshd
+
+echo "Passwordless SSH setup completed for Server!"
+
+exit 0
