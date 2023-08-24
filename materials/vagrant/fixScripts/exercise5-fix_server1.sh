@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define variables
-SERVER="192.168.60.11"
+SERVER="192.168.60.10"
 USERNAME="vagrant"
 AUTHORIZED_KEYS_FILE_PATH="/home/$USERNAME/.ssh/authorized_keys"
 PUBLIC_KEY=$(cat ~/.ssh/id_rsa.pub)
