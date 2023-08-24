@@ -36,5 +36,5 @@ ssh-keygen -t rsa -b 4096 -f ~/.ssh/server2_key -N ""
 # }
 
 # Run functions
-copy_keys
-disable_server_auth
+#copy_keys
+#disable_server_auth
