@@ -1,40 +1,31 @@
 #!/bin/bash
 
-# Check if sshpass is installed, and install if not
-if ! command -v sshpass &> /dev/null; then
-    echo "sshpass is not installed. Installing it..."
-    if [[ "$(uname)" == "Linux" ]]; then
-        sudo apt-get update
-        sudo apt-get install -y sshpass
-    elif [[ "$(uname)" == "Darwin" ]]; then
-        brew install https://raw.githubusercontent.com/kadwanev/bigboybrew/master/Library/Formula/sshpass.rb
-    else
-        echo "Unsupported operating system. Please install sshpass manually."
-        exit 1
-    fi
-fi
-
-# Server details
+# Define the source and destination servers
 SERVER1_IP="192.168.60.10"
 SERVER2_IP="192.168.60.11"
-USER="vagrant"
 
-# Generate SSH keys
-ssh-keygen -t rsa -b 4096 -f ~/.ssh/server1_key -N ""
-ssh-keygen -t rsa -b 4096 -f ~/.ssh/server2_key -N ""
+# Define the source and destination paths
+SOURCE_PATH="/home/vagrant/.ssh/authorized_keys"
+DEST_PATH="~/"
 
-# Copy keys to servers
-copy_keys() {
-    sshpass -p "" ssh-copy-id -i ~/.ssh/server1_key.pub $USER@$SERVER1_IP
-    sshpass -p "" ssh-copy-id -i ~/.ssh/server2_key.pub $USER@$SERVER2_IP
-}
+# Generate an SSH key pair (ECDSA)
+echo "Generating SSH key pair..."
+ssh-keygen -t ecdsa -f ~/.ssh/id_ecdsa -N ""
 
-# Disable server authorization
-disable_server_auth() {
-    ssh -i ~/.ssh/server1_key $USER@$SERVER1_IP "echo 'StrictHostKeyChecking no' >> /home/vagrant/.ssh/config"
-    ssh -i ~/.ssh/server2_key $USER@$SERVER2_IP "echo 'StrictHostKeyChecking no' >> /home/vagrant/.ssh/config"
-}
+# Add the private key to the SSH agent
+echo "Adding private key to SSH agent..."
+ssh-add ~/.ssh/id_ecdsa
 
-# Run functions
-copy_keys
-disable_server_auth
+# Copy the public key to server1 for authentication
+echo "Copying public key to server1 for authentication..."
+ssh-copy-id -i ~/.ssh/id_ecdsa.pub "vagrant@${SERVER1_IP}"
+
+# Debug: Display the public key for troubleshooting
+echo "Contents of public key:"
+cat ~/.ssh/id_ecdsa.pub
+
+# Copy the file from server1 to server2
+echo "Copying file from server1 to server2..."
+scp "${SERVER1_IP}:${SOURCE_PATH}" "${SERVER2_IP}:${DEST_PATH}"
+
+echo "File copied successfully!"
