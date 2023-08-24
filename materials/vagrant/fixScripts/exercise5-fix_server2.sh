@@ -31,8 +31,9 @@ ssh-copy-id -i ~/.ssh/id_ecdsa.pub "vagrant@${SERVER1_IP}"
 echo "Contents of public key:"
 cat ~/.ssh/id_ecdsa.pub
 
-# Copy the file from server1 to server2
-echo "Copying file from server1 to server2..."
+# Copy the file from server2 to server1
+echo "Copying file from server2 to server1..."
+
 scp "${SERVER2_IP}:${SOURCE_PATH}" "${SERVER1_IP}:${DEST_PATH}"
 
 echo "File copied successfully!"
