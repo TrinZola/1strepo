@@ -31,8 +31,8 @@ copy_keys() {
 
 # Disable server authorization
 disable_server_auth() {
-    ssh -i ~/.ssh/server1_key $USER@$SERVER1_IP "echo 'StrictHostKeyChecking no' >> ~/.ssh/config"
-    ssh -i ~/.ssh/server2_key $USER@$SERVER2_IP "echo 'StrictHostKeyChecking no' >> ~/.ssh/config"
+    ssh -i ~/.ssh/server1_key $USER@$SERVER1_IP "echo 'StrictHostKeyChecking no' >> /home/vagrant/.ssh/config"
+    ssh -i ~/.ssh/server2_key $USER@$SERVER2_IP "echo 'StrictHostKeyChecking no' >> /home/vagrant/.ssh/config"
 }
 
 # Run functions
