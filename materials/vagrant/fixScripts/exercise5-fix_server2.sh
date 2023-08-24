@@ -37,8 +37,8 @@ edit_sshd_config
 echo "Debugging info for Server:"
 ssh "$USERNAME@$SERVER" tail -n 20 /var/log/auth.log
 
-# Disable authorization prompt for Server 2
-echo "Host 192.168.60.11" >> /home/$USERNAME/.ssh/config
+# Disable authorization prompt for Server 1
+echo "Host 192.168.60.10" >> /home/$USERNAME/.ssh/config
 echo "    StrictHostKeyChecking no" >> /home/$USERNAME/.ssh/config
 echo "    UserKnownHostsFile /dev/null" >> /home/$USERNAME/.ssh/config
 chmod 600 /home/$USERNAME/.ssh/config
