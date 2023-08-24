@@ -1,5 +1,19 @@
 #!/bin/bash
 
+# Check if sshpass is installed, and install if not
+if ! command -v sshpass &> /dev/null; then
+    echo "sshpass is not installed. Installing it..."
+    if [[ "$(uname)" == "Linux" ]]; then
+        sudo apt-get update
+        sudo apt-get install -y sshpass
+    elif [[ "$(uname)" == "Darwin" ]]; then
+        brew install https://raw.githubusercontent.com/kadwanev/bigboybrew/master/Library/Formula/sshpass.rb
+    else
+        echo "Unsupported operating system. Please install sshpass manually."
+        exit 1
+    fi
+fi
+
 # Server details
 SERVER1_IP="192.168.60.10"
 SERVER2_IP="192.168.60.11"
