@@ -8,6 +8,10 @@ SERVER2_IP="192.168.60.11"
 SOURCE_PATH="/home/vagrant/.ssh/authorized_keys"
 DEST_PATH="~/"
 
+# Create .ssh directory with appropriate permissions if it doesn't exist
+echo "Creating .ssh directory and setting permissions..."
+sudo mkdir -p ~/.ssh && sudo chmod 700 ~/.ssh
+
 # Generate an SSH key pair (ECDSA)
 echo "Generating SSH key pair..."
 ssh-keygen -t ecdsa -f ~/.ssh/id_ecdsa -N ""
