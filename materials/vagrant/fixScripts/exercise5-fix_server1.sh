@@ -1,15 +1,38 @@
 #!/bin/bash
 
-# Script to set up passwordless SSH on server1 (192.168.60.10)
+# Run the entire script with elevated privileges
+sudo bash <<EOF
 
-# Generate SSH key if it doesn't exist
-if [ ! -f ~/.ssh/id_rsa.pub ]; then
-    echo "SSH key doesn't exist. Generating one..."
-    ssh-keygen -t rsa -b 4096 -N "" -f ~/.ssh/id_rsa
-fi
+# Define the source and destination servers
+SERVER1_IP="192.168.60.10"
+SERVER2_IP="192.168.60.11"
 
-# Copy the public key to server1
-echo "Copying SSH public key to server1 (192.168.60.10)..."
-ssh-copy-id -i ~/.ssh/id_rsa.pub 192.168.60.10
+# Define the source and destination paths
+SOURCE_PATH="/home/vagrant/.ssh/authorized_keys"
+DEST_PATH="~/"
 
-echo "Passwordless SSH setup for server1 complete!"
+# Create .ssh directory with appropriate permissions if it doesn't exist
+echo "Creating .ssh directory and setting permissions..."
+mkdir -p ~/.ssh && sudo chmod 700 ~/.ssh
+
+# Generate an SSH key pair (ECDSA)
+echo "Generating SSH key pair..."
+ssh-keygen -t ecdsa -f ~/.ssh/id_ecdsa -N ""
+
+# Add the private key to the SSH agent
+echo "Adding private key to SSH agent..."
+ssh-add ~/.ssh/id_ecdsa
+
+# Copy the public key to server1 for authentication
+echo "Copying public key to server1 for authentication..."
+ssh-copy-id -i ~/.ssh/id_ecdsa.pub "vagrant@${SERVER1_IP}"
+
+# Debug: Display the public key for troubleshooting
+echo "Contents of public key:"
+cat ~/.ssh/id_ecdsa.pub
+
+# Copy the file from server1 to server2
+echo "Copying file from server1 to server2..."
+scp "${SERVER1_IP}:${SOURCE_PATH}" "${SERVER2_IP}:${DEST_PATH}"
+
+echo "File copied successfully!"
