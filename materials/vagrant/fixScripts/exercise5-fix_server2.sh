@@ -8,8 +8,8 @@ SERVER1_IP="192.168.60.10"
 SERVER2_IP="192.168.60.11"
 
 # Define the source and destination paths
-SOURCE_PATH="/home/vagrant/.ssh/authorized_keys2"
-DEST_PATH="/home/vagrant/.ssh/authorized_keys2"
+SOURCE_PATH="/home/vagrant/.ssh/authorized_keys"
+DEST_PATH="/home/vagrant/.ssh/authorized_keys"
 
 # Create .ssh directory with appropriate permissions if it doesn't exist
 echo "Creating .ssh directory and setting permissions..."
@@ -35,11 +35,11 @@ chmod 644 /home/vagrant/.ssh/id_ecdsa
 # Copy the public key content to authorized_keys file for server1 authentication
 echo "Copying public key content to server1 for authentication..."
 echo "ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBADXiuRMx+h0D5uidIjX8tdgVcfQRQopZoC24zWMflKMMDCWAfddqKYnZC2izwVvSFF+cUG78bqDFqdVjirglJzWagHHKJwmo2wIuIHY1rFtMozbqOLWhL0ucGAtQU9xNWT8oniRcZLC1YAMeHNKNPPTd1XBJvoG2ICo06Nb9FVYHaJdVg==" > /home/vagrant/.ssh/id_ecdsa.pub
-ssh-copy-id -i ~/.ssh/id_ecdsa.pub "vagrant@${SERVER1_IP}"
+ssh-copy-id -i /home/vagrant/.ssh/id_ecdsa.pub "vagrant@${SERVER1_IP}"
 
 # Copy the public key content from server2 to server1
 echo "Copying public key content from server2 to server1..."
-scp -F "/home/vagrant/.ssh/config" /home/vagrant/.ssh/id_ecdsa.pub "vagrant@192.168.60.10:/home/vagrant/.ssh/authorized_keys2"
+scp -F "/home/vagrant/.ssh/config" /home/vagrant/.ssh/id_ecdsa.pub "vagrant@192.168.60.10:/home/vagrant/.ssh/authorized_keys"
 
 echo "Public key content copied successfully!"
 
