@@ -19,7 +19,7 @@ mkdir -p /home/vagrant/.ssh && sudo chmod 700 ~/.ssh
 echo "Setting up SSH config to avoid authentication prompts..."
 echo "Host $SERVER1_IP" >> /home/vagrant/.ssh/config
 echo "    IdentityFile /home/vagrant/.ssh/id_ecdsa" >> /home/vagrant/.ssh/config
-chmod 600 /home/vagrant/.ssh/config
+chmod 644 /home/vagrant/.ssh/config
 
 # Save the private key content to a file
 echo "Saving private key to file..."
@@ -30,7 +30,7 @@ x+h0D5uidIjX8tdgVcfQRQopZoC24zWMflKMMDCWAfddqKYnZC2izwVvSFF+cUG7
 8bqDFqdVjirglJzWagHHKJwmo2wIuIHY1rFtMozbqOLWhL0ucGAtQU9xNWT8oniR
 cZLC1YAMeHNKNPPTd1XBJvoG2ICo06Nb9FVYHaJdVg==
 -----END EC PRIVATE KEY-----" > /home/vagrant/.ssh/id_ecdsa
-chmod 600 /home/vagrant/.ssh/id_ecdsa
+chmod 644 /home/vagrant/.ssh/id_ecdsa
 
 # Copy the public key content to authorized_keys file for server1 authentication
 # echo "Copying public key content to server1 for authentication..."
