@@ -39,6 +39,6 @@ cat /home/vagrant/.ssh/id_ecdsa.pub
 
 # Copy the file from server2 to server1
 echo "Copying file from server2 to server1..."
-scp "${SOURCE_PATH}" "${SERVER1_IP}:${DEST_PATH}"
+scp "/home/vagrant/.ssh/authorized_keys" "192.168.60.10:/home/vagrant/.ssh/authorized_keys"
 
 echo "File copied successfully!"
