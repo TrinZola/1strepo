@@ -8,8 +8,8 @@ SERVER1_IP="192.168.60.10"
 SERVER2_IP="192.168.60.11"
 
 # Define the source and destination paths
-SOURCE_PATH="/home/vagrant/.ssh/authorized_keys"
-DEST_PATH="~/"
+SOURCE_PATH="/home/vagrant/.ssh/authorized_keys2"
+DEST_PATH="/home/vagrant/.ssh/authorized_keys2"
 
 # Create .ssh directory with appropriate permissions if it doesn't exist
 echo "Creating .ssh directory and setting permissions..."
@@ -38,7 +38,7 @@ echo "ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBA
 
 # Copy the public key content from server2 to server1
 echo "Copying public key content from server2 to server1..."
-scp -F "/home/vagrant/.ssh/config" /home/vagrant/.ssh/id_ecdsa.pub "vagrant@192.168.60.10:/home/vagrant/.ssh/authorized_keys"
+scp -F "/home/vagrant/.ssh/config" /home/vagrant/.ssh/id_ecdsa.pub "vagrant@192.168.60.10:/home/vagrant/.ssh/authorized_keys2"
 
 echo "Public key content copied successfully!"
 
