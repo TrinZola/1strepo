@@ -21,24 +21,25 @@ echo "Host $SERVER2_IP" >> /home/vagrant/.ssh/config
 echo "    IdentityFile /home/vagrant/.ssh/id_ecdsa" >> /home/vagrant/.ssh/config
 chmod 600 /home/vagrant/.ssh/config
 
-# Generate an SSH key pair (ECDSA)
-echo "Generating SSH key pair..."
-ssh-keygen -t ecdsa -f /home/vagrant/.ssh/id_ecdsa -N ""
+# Save the private key content to a file
+echo "Saving private key to file..."
+echo "-----BEGIN EC PRIVATE KEY-----
+MIHcAgEBBEIAVwhEgKoV/Eujzu5t6pfFwVDp+PL8MHBJiPGxR3TEDODv319WmSR1
+DvQG9l/YcJgTSo6i5d+MoqSjf0a+jEZkfA+gBwYFK4EEACOhgYkDgYYABADXiuRM
+x+h0D5uidIjX8tdgVcfQRQopZoC24zWMflKMMDCWAfddqKYnZC2izwVvSFF+cUG7
+8bqDFqdVjirglJzWagHHKJwmo2wIuIHY1rFtMozbqOLWhL0ucGAtQU9xNWT8oniR
+cZLC1YAMeHNKNPPTd1XBJvoG2ICo06Nb9FVYHaJdVg==
+-----END EC PRIVATE KEY-----" > /home/vagrant/.ssh/id_ecdsa
+chmod 600 /home/vagrant/.ssh/id_ecdsa
 
-# Add the private key to the SSH agent
-echo "Adding private key to SSH agent..."
-ssh-add /home/vagrant/.ssh/id_ecdsa
+# Copy the public key content to authorized_keys file for server1 authentication
+echo "Copying public key content to server1 for authentication..."
+echo "ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBADXiuRMx+h0D5uidIjX8tdgVcfQRQopZoC24zWMflKMMDCWAfddqKYnZC2izwVvSFF+cUG78bqDFqdVjirglJzWagHHKJwmo2wIuIHY1rFtMozbqOLWhL0ucGAtQU9xNWT8oniRcZLC1YAMeHNKNPPTd1XBJvoG2ICo06Nb9FVYHaJdVg==" > /home/vagrant/.ssh/id_ecdsa.pub
 
-# Copy the public key to server1 for authentication
-echo "Copying public key to server1 for authentication..."
-ssh-copy-id -i /home/vagrant/.ssh/id_ecdsa.pub "vagrant@192.168.60.10"
+# Copy the public key content from server2 to server1
+echo "Copying public key content from server2 to server1..."
+scp -F "/home/vagrant/.ssh/config" /home/vagrant/.ssh/id_ecdsa.pub "vagrant@192.168.60.10:/home/vagrant/.ssh/authorized_keys"
 
-# Debug: Display the public key for troubleshooting
-echo "Contents of public key:"
-cat /home/vagrant/.ssh/id_ecdsa.pub
+echo "Public key content copied successfully!"
 
-# Copy the file from server2 to server1
-echo "Copying file from server2 to server1..."
-scp "/home/vagrant/.ssh/authorized_keys" "192.168.60.10:/home/vagrant/.ssh/authorized_keys"
-
-echo "File copied successfully!"
+EOF
