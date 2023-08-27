@@ -25,7 +25,7 @@ ssh-add /home/vagrant/.ssh/id_ecdsa
 
 # Copy the public key to server1 for authentication
 echo "Copying public key to server1 for authentication..."
-ssh-copy-id -i /home/vagrant/.ssh/id_ecdsa.pub "vagrant@${SERVER1_IP}"
+ssh-copy-id -i /home/vagrant/.ssh/id_ecdsa.pub "vagrant@192.168.60.10"
 
 # Debug: Display the public key for troubleshooting
 echo "Contents of public key:"
