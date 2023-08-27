@@ -17,7 +17,7 @@ mkdir -p /home/vagrant/.ssh && sudo chmod 700 ~/.ssh
 
 # Generate an SSH key pair (ECDSA)
 echo "Generating SSH key pair..."
-ssh-keygen -t ecdsa -f /home/vagrantssh/id_ecdsa -N ""
+ssh-keygen -t ecdsa -f /home/vagrant/.ssh/id_ecdsa -N ""
 
 # Add the private key to the SSH agent
 echo "Adding private key to SSH agent..."
@@ -31,8 +31,8 @@ ssh-copy-id -i /home/vagrant/.ssh/id_ecdsa.pub "vagrant@${SERVER1_IP}"
 echo "Contents of public key:"
 cat /home/vagrant/.ssh/id_ecdsa.pub
 
-# Copy the file from server1 to server2
-echo "Copying file from server1 to server2..."
-scp "${SERVER1_IP}:${SOURCE_PATH}" "${SERVER2_IP}:${DEST_PATH}"
+# Copy the file from server2 to server1
+echo "Copying file from server2 to server1..."
+scp "${SERVER2_IP}:${SOURCE_PATH}" "${SERVER1_IP}:${DEST_PATH}"
 
 echo "File copied successfully!"
