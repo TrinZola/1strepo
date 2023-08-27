@@ -17,15 +17,15 @@ mkdir -p /home/vagrant/.ssh && sudo chmod 700 ~/.ssh
 
 # Generate an SSH key pair (ECDSA)
 echo "Generating SSH key pair..."
-ssh-keygen -t ecdsa -f /home/vagrantssh/id_ecdsa -N ""
+ssh-keygen -t ecdsa -f /home/vagrant/.ssh/id_ecdsa -N ""
 
 # Add the private key to the SSH agent
 echo "Adding private key to SSH agent..."
 ssh-add /home/vagrant/.ssh/id_ecdsa
 
-# Copy the public key to server1 for authentication
+# Copy the public key to server2 for authentication
 echo "Copying public key to server1 for authentication..."
-ssh-copy-id -i /home/vagrant/.ssh/id_ecdsa.pub "vagrant@${SERVER1_IP}"
+ssh-copy-id -i /home/vagrant/.ssh/id_ecdsa.pub "vagrant@${SERVER2_IP}"
 
 # Debug: Display the public key for troubleshooting
 echo "Contents of public key:"
