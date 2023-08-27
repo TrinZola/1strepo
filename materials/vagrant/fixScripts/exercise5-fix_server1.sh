@@ -17,7 +17,7 @@ mkdir -p /home/vagrant/.ssh && sudo chmod 700 ~/.ssh
 
 # Set up SSH config to avoid authentication prompts
 echo "Setting up SSH config to avoid authentication prompts..."
-echo "Host $SERVER2_IP" >> /home/vagrant/.ssh/config
+echo "Host $SERVER1_IP" >> /home/vagrant/.ssh/config
 echo "    IdentityFile /home/vagrant/.ssh/id_ecdsa" >> /home/vagrant/.ssh/config
 chmod 600 /home/vagrant/.ssh/config
 
