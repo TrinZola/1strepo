@@ -13,7 +13,7 @@ DEST_PATH="/home/vagrant/.ssh/authorized_keys"
 
 # Create .ssh directory with appropriate permissions if it doesn't exist
 echo "Creating .ssh directory and setting permissions..."
-mkdir -p /home/vagrant/.ssh && sudo chmod 700 ~/.ssh
+mkdir -p /home/vagrant/.ssh && sudo chmod 644 ~/.ssh
 
 # Set up SSH config to avoid authentication prompts
 echo "Setting up SSH config to avoid authentication prompts..."
