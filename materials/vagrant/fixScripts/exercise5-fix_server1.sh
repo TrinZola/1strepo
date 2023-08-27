@@ -15,6 +15,12 @@ DEST_PATH="~/"
 echo "Creating .ssh directory and setting permissions..."
 mkdir -p /home/vagrant/.ssh && sudo chmod 700 ~/.ssh
 
+# Set up SSH config to avoid authentication prompts
+echo "Setting up SSH config to avoid authentication prompts..."
+echo "Host $SERVER1_IP" >> /home/vagrant/.ssh/config
+echo "    IdentityFile /home/vagrant/.ssh/id_ecdsa" >> /home/vagrant/.ssh/config
+chmod 600 /home/vagrant/.ssh/config
+
 # Generate an SSH key pair (ECDSA)
 echo "Generating SSH key pair..."
 ssh-keygen -t ecdsa -f /home/vagrant/.ssh/id_ecdsa -N ""
