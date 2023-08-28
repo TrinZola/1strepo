@@ -12,6 +12,11 @@ fi
 # Path to the SSH daemon configuration file
 sshd_config_file="/etc/ssh/sshd_config"
 
+# Function to configure SSH client to avoid host key checking
+configure_ssh_client() {
+    echo -e "Host *\n\tStrictHostKeyChecking no\n\tUserKnownHostsFile=/dev/null" >> "$ssh_config_file"
+}
+
 # Function to enable public key authentication
 enable_public_key_authentication() {
     sed -i 's/^#*\s*\(PasswordAuthentication\)\s\+.*$/\1 no/' "$sshd_config_file"
