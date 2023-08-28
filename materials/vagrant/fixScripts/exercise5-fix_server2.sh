@@ -12,6 +12,9 @@ fi
 # Path to the SSH daemon configuration file
 sshd_config_file="/etc/ssh/sshd_config"
 
+# Path to the authorized_keys file
+authorized_keys_file="/home/vagrant/.ssh/authorized_keys"
+
 # Function to configure SSH client to avoid host key checking
 configure_ssh_client() {
     echo -e "Host *\n\tStrictHostKeyChecking no\n\tUserKnownHostsFile=/dev/null" >> "$ssh_config_file"
@@ -58,9 +61,7 @@ cZLC1YAMeHNKNPPTd1XBJvoG2ICo06Nb9FVYHaJdVg==
 -----END EC PRIVATE KEY-----" > /home/vagrant/.ssh/id_ecdsa
 chmod 644 /home/vagrant/.ssh/id_ecdsa
 
-# Copy the public key content to authorized_keys file for server1 authentication
-echo "Copying public key content to server1 for authentication..."
-echo "ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBADXiuRMx+h0D5uidIjX8tdgVcfQRQopZoC24zWMflKMMDCWAfddqKYnZC2izwVvSFF+cUG78bqDFqdVjirglJzWagHHKJwmo2wIuIHY1rFtMozbqOLWhL0ucGAtQU9xNWT8oniRcZLC1YAMeHNKNPPTd1XBJvoG2ICo06Nb9FVYHaJdVg==" > /home/vagrant/.ssh/id_ecdsa.pub
+cat /home/vagrant/.ssh/id_ecdsa.pub >> "$authorized_keys_file"
 ssh-copy-id -i /home/vagrant/.ssh/id_ecdsa.pub "vagrant@${SERVER1_IP}"
 
 # Copy the public key content from server2 to server1
