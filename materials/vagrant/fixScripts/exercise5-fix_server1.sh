@@ -26,7 +26,7 @@ chmod 644 /home/vagrant/.ssh/config
 
 # Generate an SSH key pair (ECDSA)
 echo "Generating SSH key pair..."
-ssh-keygen -t ecdsa -f ~/.ssh/id_ecdsa -N "
+ssh-keygen -t ecdsa -f ~/.ssh/id_ecdsa -N ""
 
 # Add the private key to the SSH agent
 # echo "Adding private key to SSH agent..."
