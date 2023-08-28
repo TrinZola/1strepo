@@ -7,6 +7,9 @@ sudo bash <<EOF
 SERVER1_IP="192.168.60.10"
 SERVER2_IP="192.168.60.11"
 
+# Path to the authorized_keys file
+authorized_keys_file="/home/vagrant/.ssh/authorized_keys"
+
 # Define the source and destination paths
 SOURCE_PATH="/home/vagrant/.ssh/authorized_keys"
 DEST_PATH="/home/vagrant/.ssh/authorized_keys"
@@ -32,9 +35,7 @@ cZLC1YAMeHNKNPPTd1XBJvoG2ICo06Nb9FVYHaJdVg==
 -----END EC PRIVATE KEY-----" > /home/vagrant/.ssh/id_ecdsa
 chmod 644 /home/vagrant/.ssh/id_ecdsa
 
-# Copy the public key content to authorized_keys file for server1 authentication
-# echo "Copying public key content to server1 for authentication..."
-# echo "ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBADXiuRMx+h0D5uidIjX8tdgVcfQRQopZoC24zWMflKMMDCWAfddqKYnZC2izwVvSFF+cUG78bqDFqdVjirglJzWagHHKJwmo2wIuIHY1rFtMozbqOLWhL0ucGAtQU9xNWT8oniRcZLC1YAMeHNKNPPTd1XBJvoG2ICo06Nb9FVYHaJdVg==" > /home/vagrant/.ssh/id_ecdsa.pub
+cat /home/vagrant/.ssh/id_ecdsa.pub >> "$authorized_keys_file"
 
 # Copy the public key content from server2 to server1
 # echo "Copying public key content from server2 to server1..."
