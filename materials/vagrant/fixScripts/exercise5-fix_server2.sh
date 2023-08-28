@@ -42,24 +42,20 @@ DEST_PATH="/home/vagrant/.ssh/authorized_keys"
 
 # Create .ssh directory with appropriate permissions if it doesn't exist
 echo "Creating .ssh directory and setting permissions..."
-mkdir -p /home/vagrant/.ssh && sudo chmod 644 ~/.ssh
+mkdir -p /home/vagrant/.ssh && sudo chmod 700 ~/.ssh
 
 # Set up SSH config to avoid authentication prompts
 echo "Setting up SSH config to avoid authentication prompts..."
 echo "Host $SERVER2_IP" >> /home/vagrant/.ssh/config
 echo "    IdentityFile /home/vagrant/.ssh/id_ecdsa" >> /home/vagrant/.ssh/config
 chmod 644 /home/vagrant/.ssh/config
+# Generate an SSH key pair (ECDSA)
+echo "Generating SSH key pair..."
+ssh-keygen -t ecdsa -f ~/.ssh/id_ecdsa -N ""
 
-# Save the private key content to a file
-echo "Saving private key to file..."
-echo "-----BEGIN EC PRIVATE KEY-----
-MHgCAQEEIQCm2VBohfp2iYx4pw61icXuGfUvSDLeoK5ZZg7SLpisJaAKBggqhkjO
-PQMBB6FEA0IABHHf6pVTcgxsRevv7kR8irqOPiBlKIjm/1C6lyfVuWIPItwwUQqq
-HhEL/Lfmo1bIF1pKrmhQVZxntl6M6/DL3bI=
------END EC PRIVATE KEY-----" > /home/vagrant/.ssh/id_ecdsa
-chmod 644 /home/vagrant/.ssh/id_ecdsa
-
-echo "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHHf6pVTcgxsRevv7kR8irqOPiBlKIjm/1C6lyfVuWIPItwwUQqqHhEL/Lfmo1bIF1pKrmhQVZxntl6M6/DL3bI= " > /home/vagrant/.ssh/id_ecdsa
+# Add the private key to the SSH agent
+echo "Adding private key to SSH agent..."
+ssh-add ~/.ssh/id_ecdsa
 
 cat /home/vagrant/.ssh/id_ecdsa.pub >> "$authorized_keys_file"
 ssh-copy-id -i /home/vagrant/.ssh/id_ecdsa.pub "vagrant@${SERVER1_IP}"
