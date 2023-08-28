@@ -39,5 +39,3 @@ cat /home/vagrant/.ssh/id_ecdsa.pub >> "$authorized_keys_file"
 # scp -F "/home/vagrant/.ssh/config" /home/vagrant/.ssh/id_ecdsa.pub "vagrant@192.168.60.10:/home/vagrant/.ssh/authorized_keys2"
 
 # echo "Public key content copied successfully!"
-
-EOF
