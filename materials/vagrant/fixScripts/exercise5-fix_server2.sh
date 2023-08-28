@@ -21,26 +21,13 @@ configure_ssh_client() {
 enable_public_key_authentication() {
     sed -i 's/^#*\s*\(PasswordAuthentication\)\s\+.*$/\1 no/' "$sshd_config_file"
     sed -i 's/^#*\s*\(PubkeyAuthentication\)\s\+.*$/\1 yes/' "$sshd_config_file"
+    sed -i 's/^#*\s*\(AuthorizedKeysFile\)\s\+.*$/\1 %h\/.ssh\/authorized_keys/' "$sshd_config_file"
 }
 
 # Restart SSH service
 restart_ssh_service() {
     systemctl restart ssh
 }
-
-# Main script execution
-echo "Enabling SSH public key authentication..."
-
-# Backup the original sshd_config file
-cp "$sshd_config_file" "$sshd_config_file.bak"
-
-# Enable public key authentication by modifying sshd_config
-enable_public_key_authentication
-
-# Restart SSH service
-restart_ssh_service
-
-echo "SSH public key authentication has been enabled."
 
 # Define the source and destination servers
 SERVER1_IP="192.168.60.10"
@@ -52,13 +39,13 @@ DEST_PATH="/home/vagrant/.ssh/authorized_keys"
 
 # Create .ssh directory with appropriate permissions if it doesn't exist
 echo "Creating .ssh directory and setting permissions..."
-mkdir -p /home/vagrant/.ssh && sudo chmod 700 ~/.ssh
+mkdir -p /home/vagrant/.ssh && sudo chmod 644 ~/.ssh
 
 # Set up SSH config to avoid authentication prompts
 echo "Setting up SSH config to avoid authentication prompts..."
 echo "Host $SERVER2_IP" >> /home/vagrant/.ssh/config
 echo "    IdentityFile /home/vagrant/.ssh/id_ecdsa" >> /home/vagrant/.ssh/config
-chmod 700 /home/vagrant/.ssh/config
+chmod 644 /home/vagrant/.ssh/config
 
 # Save the private key content to a file
 echo "Saving private key to file..."
