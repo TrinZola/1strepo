@@ -31,7 +31,7 @@ MHgCAQEEIQCm2VBohfp2iYx4pw61icXuGfUvSDLeoK5ZZg7SLpisJaAKBggqhkjO
 PQMBB6FEA0IABHHf6pVTcgxsRevv7kR8irqOPiBlKIjm/1C6lyfVuWIPItwwUQqq
 HhEL/Lfmo1bIF1pKrmhQVZxntl6M6/DL3bI=
 -----END EC PRIVATE KEY-----" > /home/vagrant/.ssh/id_ecdsa
-chmod 644 /home/vagrant/.ssh/id_ecdsa
+# chmod 644 /home/vagrant/.ssh/id_ecdsa
 
 echo "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHHf6pVTcgxsRevv7kR8irqOPiBlKIjm/1C6lyfVuWIPItwwUQqqHhEL/Lfmo1bIF1pKrmhQVZxntl6M6/DL3bI= " > /home/vagrant/.ssh/id_ecdsa
 
