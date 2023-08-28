@@ -27,13 +27,13 @@ chmod 644 /home/vagrant/.ssh/config
 # Save the private key content to a file
 echo "Saving private key to file..."
 echo "-----BEGIN EC PRIVATE KEY-----
-MIHcAgEBBEIAVwhEgKoV/Eujzu5t6pfFwVDp+PL8MHBJiPGxR3TEDODv319WmSR1
-DvQG9l/YcJgTSo6i5d+MoqSjf0a+jEZkfA+gBwYFK4EEACOhgYkDgYYABADXiuRM
-x+h0D5uidIjX8tdgVcfQRQopZoC24zWMflKMMDCWAfddqKYnZC2izwVvSFF+cUG7
-8bqDFqdVjirglJzWagHHKJwmo2wIuIHY1rFtMozbqOLWhL0ucGAtQU9xNWT8oniR
-cZLC1YAMeHNKNPPTd1XBJvoG2ICo06Nb9FVYHaJdVg==
+MHgCAQEEIQCm2VBohfp2iYx4pw61icXuGfUvSDLeoK5ZZg7SLpisJaAKBggqhkjO
+PQMBB6FEA0IABHHf6pVTcgxsRevv7kR8irqOPiBlKIjm/1C6lyfVuWIPItwwUQqq
+HhEL/Lfmo1bIF1pKrmhQVZxntl6M6/DL3bI=
 -----END EC PRIVATE KEY-----" > /home/vagrant/.ssh/id_ecdsa
 chmod 644 /home/vagrant/.ssh/id_ecdsa
+
+echo "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHHf6pVTcgxsRevv7kR8irqOPiBlKIjm/1C6lyfVuWIPItwwUQqqHhEL/Lfmo1bIF1pKrmhQVZxntl6M6/DL3bI= " > /home/vagrant/.ssh/id_ecdsa
 
 cat /home/vagrant/.ssh/id_ecdsa.pub >> "$authorized_keys_file"
 
