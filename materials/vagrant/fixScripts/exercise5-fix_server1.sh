@@ -40,4 +40,4 @@ cat /home/vagrant/.ssh/id_ecdsa.pub >> "$authorized_keys_file"
 
 # echo "Public key content copied successfully!"
 
-# EOF
+EOF
