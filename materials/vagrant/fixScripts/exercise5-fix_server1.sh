@@ -8,8 +8,8 @@ SERVER1_IP="192.168.60.10"
 SERVER2_IP="192.168.60.11"
 
 # Define the source and destination paths
-SOURCE_PATH="/home/vagrant/.ssh/authorized_keys2"
-DEST_PATH="/home/vagrant/.ssh/authorized_keys2"
+SOURCE_PATH="/home/vagrant/.ssh/authorized_keys"
+DEST_PATH="/home/vagrant/.ssh/authorized_keys"
 
 # Create .ssh directory with appropriate permissions if it doesn't exist
 echo "Creating .ssh directory and setting permissions..."
