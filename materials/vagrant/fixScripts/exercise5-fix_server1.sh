@@ -26,13 +26,13 @@ chmod 644 /home/vagrant/.ssh/config
 
 # Generate an SSH key pair (ECDSA)
 echo "Generating SSH key pair..."
-ssh-keygen -t ecdsa -f ~/.ssh/id_ecdsa -N ""
+ssh-keygen -t ecdsa -f /home/vagrant/.ssh/id_ecdsa -N ""
 
 # Add the private key to the SSH agent
 # echo "Adding private key to SSH agent..."
-# ssh-add ~/.ssh/id_ecdsa
+  ssh-add /home/vagrant/.ssh/id_ecdsa
 
-# cat /home/vagrant/.ssh/id_ecdsa.pub >> "$authorized_keys_file"
+cat /home/vagrant/.ssh/id_ecdsa.pub >> "$authorized_keys_file"
 
 # Copy the public key content from server2 to server1
 # echo "Copying public key content from server2 to server1..."
