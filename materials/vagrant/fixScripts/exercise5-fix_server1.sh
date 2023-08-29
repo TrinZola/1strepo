@@ -28,6 +28,8 @@ ssh-keygen -t ecdsa -f /home/vagrant/.ssh/id_ecdsa -N ""
 # echo "Adding private key to SSH agent..."
 # ssh-add /home/vagrant/.ssh/id_ecdsa
 
+echo "IdentityFile /home/vagrant/.ssh/id_ecdsa.pub" >> /home/vagrant/.ssh/config
+
 # cat /home/vagrant/.ssh/id_ecdsa.pub >> "$authorized_keys_file"
 
 # Copy the public key content from server2 to server1
