@@ -24,7 +24,7 @@ configure_ssh_client() {
 enable_public_key_authentication() {
     sed -i 's/^#*\s*\(PasswordAuthentication\)\s\+.*$/\1 no/' "$sshd_config_file"
     sed -i 's/^#*\s*\(PubkeyAuthentication\)\s\+.*$/\1 yes/' "$sshd_config_file"
-    sed -i 's/^#*\s*\(AuthorizedKeysFile\)\s\+.*$/\1 %h\/.ssh\/authorized_keys/' "$sshd_config_file"
+    sed -i 's/^#*\s*\(AuthorizedKeysFile\)\s\+.*$/\1 /home/vagrant/.ssh/authorized_keys' "$sshd_config_file"
 }
 
 # Restart SSH service
