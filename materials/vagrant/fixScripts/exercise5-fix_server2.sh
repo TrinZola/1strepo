@@ -1,27 +1,15 @@
 #!/bin/bash
 
-# Update with the appropriate values
-SSH_USER="vagrant"
-SERVER1_IP="192.168.60.10"
-SERVER2_IP="192.168.60.11"
+sudo apt-get install sshpass -y
 
-# Store the public key in a variable
-PUBLIC_KEY="-----BEGIN PUBLIC KEY-----
-MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCD+is0cnPCSaA2QsC6U20Ds3Dm
-9lvxYO5WoPo1TtFfKhl+H2P7z3/zdTHSqBRndficz2jpQWccxlHDHQUr04wpO4Hh
-7uH+ndahGvz0ELWNbLINm7+iyezH2Zs3FlCH7Sedg2mmhjGbt0kP5USoJEbgRHwX
-OeVlPiw6WlWRbaBHZQIDAQAB
------END PUBLIC KEY-----"
+ssh-keygen -t rsa -N '' -f /home/vagrant/.ssh/id_rsa <<< y
+chown vagrant:vagrant /home/vagrant/.ssh/id_rsa
+chown vagrant:vagrant /home/vagrant/.ssh/id_rsa.pub
 
-# Create a function to install the public key
-install_public_key() {
-    local SERVER_IP="$1"
-    ssh "$SSH_USER@$SERVER_IP" "mkdir -p ~/.ssh && chmod 700 ~/.ssh && \
-        echo '$PUBLIC_KEY' >> ~/.ssh/authorized_keys && \
-        chmod 600 ~/.ssh/authorized_keys"
-    echo "SSH key has been installed on $SSH_USER@$SERVER_IP."
-}
+chmod 764 /home/vagrant/.ssh/id_rsa.pub
+echo 'sshpass -p vagrant ssh-copy-id -o "StrictHostKeyChecking=no" -i /home/vagrant/.ssh/id_rsa.pub vagrant@192.168.60.11' > /home/vagrant/sshing.sh
 
-# Install the public key on both servers
-install_public_key "$SERVER1_IP"
-install_public_key "$SERVER2_IP"
+chown vagrant:vagrant /home/vagrant/sshing.sh
+chmod 774 /home/vagrant/sshing.sh
+
+sudo sed -i '$a\    StrictHostKeyChecking no' /etc/ssh/ssh_config
