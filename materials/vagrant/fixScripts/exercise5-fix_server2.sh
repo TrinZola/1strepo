@@ -1,39 +1,35 @@
 #!/bin/bash
+#add fix to exercise5-server2 here
 
-# Run the entire script with elevated privileges
-sudo bash <<EOF
 
-# Define the source and destination servers
-SERVER1_IP="192.168.60.10"
-SERVER2_IP="192.168.60.11"
+sudo sed -i '$a\192.168.60.10	 server1 server1' /etc/hosts
 
-# Define the source and destination paths
-SOURCE_PATH="/home/vagrant/.ssh/authorized_keys"
-DEST_PATH="~/"
+# changing PasswordAuthentication value to 'yes'
+sudo sed -i "s:PasswordAuthentication no:PasswordAuthentication yes :g" \
+  /etc/ssh/sshd_config
 
-# Create .ssh directory with appropriate permissions if it doesn't exist
-echo "Creating .ssh directory and setting permissions..."
-mkdir -p ~/.ssh && sudo chmod 700 ~/.ssh
+# restart service so changes will take effect
+sudo service sshd restart
+echo "Updating System"
+sudo apt-get update && sudo apt-get upgrade
 
-# Generate an SSH key pair (ECDSA)
-echo "Generating SSH key pair..."
-ssh-keygen -t ecdsa -f ~/.ssh/id_ecdsa -N ""
+echo "Installing sshpass"
+sudo apt-get install sshpass -y
+echo "Generating keys"
+ssh-keygen -t rsa -N '' -f /home/vagrant/.ssh/id_rsa <<< y
 
-# Add the private key to the SSH agent
-echo "Adding private key to SSH agent..."
-ssh-add ~/.ssh/id_ecdsa
 
-# Copy the public key to server1 for authentication
-echo "Copying public key to server1 for authentication..."
-ssh-copy-id -i ~/.ssh/id_ecdsa.pub "vagrant@${SERVER1_IP}"
+echo "Changing owner"
+chown vagrant:vagrant /home/vagrant/.ssh/id_rsa
+chown vagrant:vagrant /home/vagrant/.ssh/id_rsa.pub
 
-# Debug: Display the public key for troubleshooting
-echo "Contents of public key:"
-cat ~/.ssh/id_ecdsa.pub
+echo "Changing permisions"
+chmod 764 /home/vagrant/.ssh/id_rsa.pub
 
-# Copy the file from server2 to server1
-echo "Copying file from server2 to server1..."
+echo "starting sshpass ssh-copy-id to server1(192.168.60.10)"
+sshpass -p vagrant ssh-copy-id -o "StrictHostKeyChecking=no"  -i  /home/vagrant/.ssh/id_rsa.pub vagrant@192.168.60.10
 
-scp "${SERVER2_IP}:${SOURCE_PATH}" "${SERVER1_IP}:${DEST_PATH}"
 
-echo "File copied successfully!"
+echo "+++++++++>>>>>Exacuting script sshing.sh in server1(192.168.60.10)"
+ssh -vvv -tt -o "StrictHostKeyChecking=no" -i /home/vagrant/.ssh/id_rsa vagrant@192.168.60.10 '/usr/bin/bash /home/vagrant/sshing.sh'
+sudo sed -i '$a\    StrictHostKeyChecking no' /etc/ssh/ssh_config
