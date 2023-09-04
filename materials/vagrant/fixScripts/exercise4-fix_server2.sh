@@ -1,13 +1,10 @@
 #!/bin/bash
 
-# Server information
-server1_name="server1"
-server1_ip="192.168.60.10"
+#adding rule to hosts file
+sudo sed -i '$a\192.168.60.10	 server1 server1' /etc/hosts
 
-# Add server1 entry to /etc/hosts
-if ! grep -q "$server1_name" /etc/hosts; then
-    echo "$server1_ip $server1_name" | sudo tee -a /etc/hosts > /dev/null
-    echo "Added entry for $server1_name"
-else
-    echo "Entry for $server1_name already exists"
-fi
+## changing PasswordAuthentication value to 'yes'
+sudo sed -i "s:PasswordAuthentication no:PasswordAuthentication yes :g"  /etc/ssh/sshd_config
+
+## restart service so changes will take effect
+sudo service sshd restart
