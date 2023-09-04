@@ -1,15 +1,13 @@
 #!/bin/bash
-#add fix to exercise4-server1 here
 
-#adding rule to hosts file
-sudo sed -i '$a\192.168.60.11	   server2 server2' /etc/hosts
+# Server information
+server2_name="server2"
+server2_ip="192.168.60.11"
 
-
-# changing PasswordAuthentication value to 'yes'
-sudo sed -i "s:PasswordAuthentication no:PasswordAuthentication yes :g"   \
-  /etc/ssh/sshd_config
-
-
-
-# restart service so changes will take effect
-sudo service sshd restart
+# Add server2 entry to /etc/hosts
+if ! grep -q "$server2_name" /etc/hosts; then
+    echo "$server2_ip $server2_name" | sudo tee -a /etc/hosts > /dev/null
+    echo "Added entry for $server2_name"
+else
+    echo "Entry for $server2_name already exists"
+fi
