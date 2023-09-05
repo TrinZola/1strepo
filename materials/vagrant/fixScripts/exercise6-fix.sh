@@ -1,5 +1,4 @@
 #!/bin/bash
-#add fix to exercise6-fix here
 
 # Check for the minimum number of arguments
 if [ "$#" -lt 3 ]; then
